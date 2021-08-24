@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="canvasjs-3.4/canvasjs.min.js"></script>
+    <script type="text/javascript">
+      function gaussianRand() {
+        var rand = 0;
+        for (var i = 0; i < 6; i += 1) {
+          rand += Math.random();
+        }
+        return rand / 6 - 0.5;
+      }
+      window.onload = function () {
+        var n = 10000;
+        console.log(`data : ${n.toLocaleString("ko-KR")} ea`);
+        console.time("timer_create_data");
+        var data = [];
+        var i;
+
+        for (i = 0; i < n; i += 1) {
+          var x = gaussianRand();
+          var y = gaussianRand();
+          data.push({ x: x, y: y });
+        }
+        console.timeEnd("timer_create_data");
+
+        console.time("timer_rendering");
+        var chart = new CanvasJS.Chart("chartContainer", {
+          title: {
+            text: "Data Rendering Test",
+          },
+
+          data: [
+            {
+              type: "scatter",
+              dataPoints: data,
+            },
+          ],
+        });
+
+        chart.render();
+        console.timeEnd("timer_rendering");
+      };
+    </script>
+  </head>
+
+  <body>
+    <div id="chartContainer" style="height: 500px; width: 100%"></div>
+  </body>
+</html>
